@@ -1,7 +1,7 @@
 # Práctica 4: Ignorando archivos *innecesarios*
 
-    Práctica creada el 20xx.xx.xx
-	Entrega: 20xx.xx.xx
+    Práctica creada el 2026.02.24
+	Entrega: 2026.03.03
 
 Los sistemas de control de cambios están hechos para poder dar
 seguimiento a la historia de los archivos que forman parte de nuestro
