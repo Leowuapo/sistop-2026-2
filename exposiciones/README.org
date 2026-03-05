@@ -6,14 +6,15 @@
   la última sección de este archivo (/Criterios de evaluación grupal/
   y /por el docente/).
 
-  |-------------+------------------------------------------------------+--------------------------------------------------------------------------+---------+---------------------+---------------------------|
-  | *Fecha*     | *Integrantes*                                        | *Integrantes*                                                            | *Video* | *Documentos*        | *Evaluación*              |
-  |-------------+------------------------------------------------------+--------------------------------------------------------------------------+---------+---------------------+---------------------------|
-  | 02-mar-2026 | Hans Martínez Sánchez e Isaías Blancas Díaz          | /Thrashing/ en la Memoria Virtual                                        | [[https://youtu.be/Bl3WWtUFZ5Y][Ver]]     | [[./BlancasIsaias-MartinezHans/GUION.pdf][Guión]], [[./BlancasIsaias-MartinezHans/Memoria Virtual.pdf][Presentación]] | [[https://encuestas.iiec.unam.mx/557189][Encuesta a los compañeros]] |
-  | 09-mar-2026 | Jesús Alejandro Monroy Tapia y Bruno Ponce de León   | Vulnerabilidad /Eternal Blue/ de Windows NT                              |         |                     |                           |
-  | 09-mar-2026 | Lizbeth Cruz Manríquez y Víctor Javier Brena de León | Unidades de procesamiento neuronal                                       |         |                     |                           |
-  | 16-mar-2026 | Adrián Axel Arzate Ríos y David Díaz Antunez         | La relación entre los sistemas operativos y las tarjetas gráficas (GPUs) |         |                     |                           |
-  |-------------+------------------------------------------------------+--------------------------------------------------------------------------+---------+---------------------+---------------------------|
+  |-------------+---------------------------------------------------------+--------------------------------------------------------------------------+---------+---------------------+---------------------------|
+  | *Fecha*     | *Integrantes*                                           | *Integrantes*                                                            | *Video* | *Documentos*        | *Evaluación*              |
+  |-------------+---------------------------------------------------------+--------------------------------------------------------------------------+---------+---------------------+---------------------------|
+  | 02-mar-2026 | Hans Martínez Sánchez e Isaías Blancas Díaz             | /Thrashing/ en la Memoria Virtual                                        | [[https://youtu.be/Bl3WWtUFZ5Y][Ver]]     | [[./BlancasIsaias-MartinezHans/GUION.pdf][Guión]], [[./BlancasIsaias-MartinezHans/Memoria Virtual.pdf][Presentación]] | [[https://encuestas.iiec.unam.mx/557189][Encuesta a los compañeros]] |
+  | 09-mar-2026 | Jesús Alejandro Monroy Tapia y Bruno Ponce de León      | Vulnerabilidad /Eternal Blue/ de Windows NT                              |         |                     |                           |
+  | 09-mar-2026 | Lizbeth Cruz Manríquez y Víctor Javier Brena de León    | Unidades de procesamiento neuronal                                       |         |                     |                           |
+  | 16-mar-2026 | Adrián Axel Arzate Ríos y David Díaz Antunez            | La relación entre los sistemas operativos y las tarjetas gráficas (GPUs) |         |                     |                           |
+  | 16-mar-2026 | Leonardo Atilano Velázquez y Sebastián Valdez Subirachs | El caché de CPU                                                          |         |                     |                           |
+  |-------------+---------------------------------------------------------+--------------------------------------------------------------------------+---------+---------------------+---------------------------|
   #+TBLFM: 
 
 * Rúbrica de evaluación
