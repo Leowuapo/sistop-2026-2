@@ -47,7 +47,10 @@ class Balsa:
         
         print(f"Grupo formado: {[b.value for b in self.grupo_actual]}")
         
-
+# definicion de la funcion persona con atributos balsa, bando e id_persona
+def persona(balsa, bando, id_persona):
+    time.sleep(random.uniform(0.1, 2.0))
+    balsa.abordar(bando, id_persona)
 def main():
     print("SIMULACIÓN CRUCE DEL RIO - PROBLEMA DE SINCRONIZACIÓN")
     print("=" * 50)
