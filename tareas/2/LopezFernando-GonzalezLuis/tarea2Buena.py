@@ -17,7 +17,7 @@ NUM_BARRERA_ELFOS = 3 #Se ocupa para definir la barrera para los elfos
 
 #Contadores para abrir cada barrera
 cuentaBarreraElfos = 0
-cuentaBarreraRenoss = 0
+cuentaBarreraRenos = 0
 
 #Mutex de cada barrera
 mutexElfo = threading.Semaphore(1)
@@ -34,7 +34,28 @@ santaSemaforo = threading.Semaphore(0)
 
 
 def accionReno(num):
-    print(f"Soy el reno {num} y estoy vacacionando :D")
+    while True:
+        print(f"Soy el reno {num} y estoy vacacionando :D")
+        numRandom = random.randint(1,1000)
+        while(numRandom != 10):
+            numRandom = random.randint(1,1000)
+            time.sleep(0.0005)
+        print(f"=======================RENO {num} esta de vuelta ==================")
+        llamadaRenos(num)
+
+def llamadaRenos(num):
+    global cuentaBarreraRenos
+    mutexReno.acquire()
+    cuentaBarreraRenos = cuentaBarreraRenos+1
+    if cuentaBarreraRenos == 9:
+        print("YA LLEGAMOS LOS 9 RENOS ++++++++++++++++++++++++++")
+        santaSemaforo.release()
+    mutexReno.release()
+    barreraRenos.acquire()
+
+
+
+
 
 
 def trabajoElfo(num):
@@ -42,6 +63,7 @@ def trabajoElfo(num):
         print(f"Soy el elfo {num} y estoy trabajando...")
         numRandom = random.randint(1,100)
         while(numRandom != 10):
+            time.sleep(0.2)
             numRandom = random.randint(1,10)
         print(f"Elfo {num} encontre un problema")
         llamadaProblema(num)
@@ -67,19 +89,39 @@ def llamadaProblema(num):
 
 
 def santaAyudando():
-    global cuentaBarreraElfos
+    global cuentaBarreraElfos, cuentaBarreraRenos
     while True:
-        santaSemaforo.acquire() # Se duemre hasta que los elfos lo despierten con santaSemaforo.release
-        print("---------------DESPERTE Y Y VOY A AYUDAR-------------")
-        barreraElfos.release()
-        barreraElfos.release()
-        barreraElfos.release()
-        time.sleep(0.1)
+        santaSemaforo.acquire() # Se duemre hasta que los renos o los elfos lo despierten
+        #Revisando si son los renos o los elfos
+        mutexReno.acquire()
+        if cuentaBarreraRenos == 9:
+            print("<<<<<<<<<<<< ES NAVIDAD A ENTREGAR LOS REGALOS!!! >>>>>>>>>>>>>>>")
+            #liberando a los 9 renos (optimizar con for)
+            barreraRenos.release()
+            barreraRenos.release()
+            barreraRenos.release()
+            barreraRenos.release()
+            barreraRenos.release()
+            barreraRenos.release()
+            barreraRenos.release()
+            barreraRenos.release()
+            barreraRenos.release()
+            cuentaBarreraRenos = 0
+            print("<<<<<<<<<<<< REGLAOS ENTREGADOS, VUELVO A DORMIR!!! >>>>>>>>>>>>>>>")
+        mutexReno.release()
 
-        #Se resetea
+
         mutexElfo.acquire()
-        cuentaBarreraElfos = 0
-        print("---------------VOLVERE A DORMIR --------------------")
+        if cuentaBarreraElfos == NUM_BARRERA_ELFOS:
+            print("---------------DESPERTE Y Y VOY A AYUDAR-------------")
+            barreraElfos.release()
+            barreraElfos.release()
+            barreraElfos.release()
+            time.sleep(0.1)
+
+            #Se resetea
+            cuentaBarreraElfos = 0
+            print("---------------VOLVERE A DORMIR --------------------")
         mutexElfo.release()
 
 #Creando hilo Santa Claus
