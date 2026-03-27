@@ -1,118 +1,34 @@
-# sistop-2026-2 • Sistemas Operativos #
+# Ejercicio de sincronización: Alumnos y asesor
 
-¡Bienvenido!
+Autores: Espinosa Gonzalez Sara Sofia y Rosete Manzano Karina Lizeth
 
-Este repositorio es el espacio de entrega de proyectos para la clase
-impartida por Gunnar Wolf de *Sistemas Operativos* de la Facultad de
-Ingeniería de la UNAM, en el semestre *2026-2* (febrero a mayo
-de 2026). El sitio Web de la materia, donde encontrarán listas,
-calificaciones, presentaciones, temas y demás materiales es
-http://gwolf.sistop.org/ y el sitio desde donde pueden consultar y
-descargar el libro que emplearemos como referencia para el cursado es
-http://sistop.org/
+## Problema que se decidió resolver
+Para esta tarea escogimos el problema de “Los alumnos y el asesor”. La idea es simular a un profesor que atiende alumnos en su cubículo, pero con ciertas restricciones. Hay un número limitado de sillas, entonces no todos pueden entrar al mismo tiempo y solo puede atender a un alumno a la vez mientras los demás esperan. Si no hay alumnos, el profesor se queda esperando hasta que llega alguien. El objetivo fue modelar esto con hilos y sincronización, evitando errores como que dos alumnos sean atendidos al mismo tiempo, lo cual nos pasó al inicio.
 
-Los alumnos utilizarán este espacio para enviar sus prácticas, tareas,
-proyectos, exposiciones, etc..
+## Lenguaje y entorno
+Usamos Python 3 con librerías basicas: threading, time, random y argparse. No usamos nada externo. Lo corrimos en Git Bash y también en la terminal normal, y en ambos funcionó sin problema.
 
-## ¿Qué es Git y cómo se usa? ##
+## Cómo ejecutar
+Desde la terminal:
+python3 alumnos_asesor.py
+Tambien se pueden cambiar parametros:
+python3 alumnos_asesor.py --students 10 --chairs 3 --max-questions 4 --seed 1
+La verdad si ayuda cambiar estos valores porque se ve distinto el comportamiento.
 
-La razón para utilizar un árbol *Git* es que se vayan familiarizando
-con las principales herramientas de colaboración para el desarrollo de
-software que encontrarán. Podrán usar Git para colaborar en cada uno
-de los equipos, y podrán usar el flujo definido por la plataforma
-*GitHub* para realizar las entregas una vez que terminen con cada
-tarea o proyecto.
+## Estrategia de sincronización
+Nos basamos en el problema del “sleeping barber”, pero adaptado. Usamos un semaforo para las sillas, otro para avisar que hay alumnos, un lock para proteger variables y threads para cada alumno. Al inicio no usamos bien el lock y nos pasó que dos alumnos hablaban con el profesor al mismo tiempo, entonces tuvimos que corregir eso.
 
-Un par de tutoriales para aprender a usar Git y GitHub:
+## Cómo funciona el programa
+Los alumnos llegan en tiempos aleatorios. Cuando llegan: si hay silla se quedan, si no hay se van. El profesor si no hay nadie espera, y si hay alumnos atiende uno por uno. Cada alumno puede hacer varias preguntas, pero no seguidas siempre, o sea no monopoliza al profesor. Los que están esperando se quedan sentados hasta que les toca.
 
-* [git - la guía sencilla](https://rogerdudler.github.io/git-guide/index.es.html)
-  Una corta serie de pasos para comenzar a trabajar con Git. Muy
-  escueto, pero fácil de entender.
-* [Hoja de referencia para GitHub
-  Git](https://training.github.com/downloads/es_ES/github-git-cheat-sheet.pdf)
-  presenta los comandos más importantes y habituales con los que trabajarán.
-* [A visual Git reference](https://marklodato.github.io/visual-git-guide/index-es.html)
-  Explica en términos de grafos qué son las principales operaciones en
-  los repositorios. Muy recomendado para tener una mejor comprensión
-  de lo que hace Git "tras bambalinas".
+## Detalles de sincronización
+Aqui fue donde mas nos atoramos. Tuvimos que asegurar que no entren mas alumnos que sillas, que solo uno sea atendido a la vez y que no haya acceso simultaneo a variables compartidas. El mutex fue clave porque sin eso se rompia todo. No hicimos una cola formal, pero si funciona bien el orden.
 
-Emplearemos en particular la forma de trabajo impulsada por el sitio
-*GitHub*, muy popular en comunidades de desarrollo de software. ¡Espero
-que muchos de ustedes ya conozcan a este sitio, y espero que todos
-aprendan algo más acerca de cómo aprovecharlo!
+## Refinamientos
+Le agregamos llegadas aleatorias, tiempo de atencion variable, numero de preguntas distinto por alumno y parametros desde la terminal. Tambien usamos seed para poder repetir pruebas porque luego era dificil ver si ya funcionaba o no.
 
-* [Hello World](https://guides.github.com/activities/hello-world/)
-  Guía de 15 minutos para comprender el flujo de *trabajo
-  colaborativo* basado en los *pull requests* de GitHub.
-* [Fork a repo](https://help.github.com/articles/fork-a-repo/)
-  Otra explicación del modelo de interacción de GitHub.
-* [Sometimes you just need a little help](https://help.github.com/)
-  Amplia lista de preguntas y respuestas de GitHub.
+## Resultados
+Se observa que el profesor espera cuando no hay alumnos, los alumnos ocupan sillas, algunos se van si no hay espacio y la atencion es de uno en uno. La salida cambia cada vez, pero eso es normal por los threads.
 
-Como nota al pie, siendo yo un firme entusiasta del software libre *de
-todo a todo*, me duele un poco utilizar un servicio propietario
-(GitHub) en vez de las alternativas plenamente libres que hay para
-esta infraestructura. Al mismo tiempo, me resulta importante
-*iniciarlos* en el uso de esta importante herramienta de desarrollo
-colaborativo, así como su interacción en tanto red social.
-
-Como sea, los invito a leer un artículo llamado [The GitHub
-Threat](https://carlchenet.com/the-github-threat/) (_la amenaza de
-GitHub_) para profundizar un poco en esta cuestión, que va desde lo
-técnico hasta lo ideológico, desde la historia comparable de otros
-espacios similares hasta meras suposiciones. A fines de 2018,
-Microsoft compró a GitHub, u si bien el funcionamiento de GitHub se ha
-mantenido mayormente independiente, en julio de 2019 [GitHub bloqueó
-el acceso a desarrolladores en Irán, Siria y
-Crimea](https://techcrunch.com/2019/07/29/github-ban-sanctioned-countries/),
-por lo cual el peligro de censura no es mera fantasía.
-
-## ¿Cómo lo usaremos en la materia? ##
-
-1. Todos los alumnos deben tener una cuenta en GitHub.
-2. Siempre que el profesor anuncie una tarea en clase, creará un
-   subdirectorio dentro del área correspondiente.
-3. Todos los alumnos harán un *fork* del árbol y desarrollarán la
-   tarea en su *fork*.
-    * Si la tarea es en equipos, basta con que *uno de ustedes* lo
-      haga — ¡Pero no olviden documentar claramente quiénes son los
-      integrantes del equipo!
-    * Pueden también crear un *fork* y trabajar colaborativamente en éste
-      entre varios.
-4. Para todas las entregas, usa el esquema de nombre estandarizado que
-   presentamos en la
-   [sección 4 de la práctica 1](https://github.com/unamfi/sistop-2026-2/tree/main/practicas/1/README.md):
-   
-       [tipo_entrega]/[numero]/[ApellidoNombre]/
-
-    * Esto es, por ejemplo, si voy a entregar la primera práctica,
-      lo hago en el directorio `tareas/1/WolfGunnar`
-    * Si estamos resolviendo algo en equipo, el directorio se crea con
-      los nombres de ambos integrantes en órden alfabético, separado
-      por guiones: Si el segundo proyecto lo hago con Abraham Álvarez,
-      el directorio de entrega será
-      `proyectos/2/AlvarezAbraham-WolfGunnar`
-5. ¡Registren el desarrollo de su proyecto! En todas las entregas no
-   triviales, se calificará el que haya un *avance visible*, reflejado
-   en varios *commits*.
-    * Ojo, importa que los mensajes en la bitácora resuman el trabajo
-      realizado a cada paso.
-6. Cuando estén contantos con el desarrollo, hagan un *pull
-   request*. Eso (y únicamente eso) contará como una entrega de
-   trabajo.
-
------
-
-## Licenciamiento ##
-
-El planteamiento de tareas, ejercicios y actividades que forman parte
-de este repositorio, así como sus resoluciones, están amparadas por la
-licencia _Creative Commons Attribution 4.0 International_
-([CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)).
-
-![CC BY 4.0](./CCBY4.0_88x31.png "CC BY 4.0")
-
-Puedes [consultar el texto completo de la licencia](./COPYING.md).
-
-La originalidad y autoría de cada elemento contenido en el repositorio
-es responsabilidad de quien lo registró (alumno o profesor).
+## Problemas que tuvimos
+Al inicio tuvimos varios errores: dos alumnos siendo atendidos al mismo tiempo, variables compartidas sin proteccion y orden raro en la ejecucion. Lo fuimos arreglando con locks y reorganizando los semaforos. Tambien nos costó entender bien cuando usar cada semaforo, no fue tan directo al inicio.
