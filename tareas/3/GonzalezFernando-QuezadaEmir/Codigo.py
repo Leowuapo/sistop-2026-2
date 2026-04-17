@@ -60,7 +60,7 @@ def spn(procesos_in):
             tiempo += 1
             continue
         
-        # De los que estan esperando, elegimos al que requiera menos tiempo (Porque)
+        # De los que estan esperando, elegimos al que requiera menos tiempo (Porque nos caen mal los q se tardan)
         proximo = min(disponibles, key=lambda x: x.servicio)
         
         # Al igual que FCFS, no hay interrupciones. Se ejecuta hasta acabar
@@ -120,7 +120,7 @@ def feedback(procesos_in, q=1):
     lista_espera = procesos[:]
 
     while len(terminados) < len(procesos):
-        # Todo proceso nuevo entra directamente a la cola VIP (Q0) *
+        #. Todo proceso nuevo entra directamente a la cola VIP (Q0) *
         while lista_espera and lista_espera[0].llegada <= tiempo:
             colas[0].append((lista_espera.pop(0), 0))
 
