@@ -127,6 +127,53 @@ def RR(procesos, quantum):
         "Secuencia": secuencia
     }
         
+def SPN(procesos):
+    ticks = 0
+    secuencia = []
+
+    procesos_por_llegar = deque(procesos)
+    procesos_listos = deque()
+
+    procesos_terminados = []
+    proceso_actual = None
+
+    while procesos_por_llegar or procesos_listos or proceso_actual:
+        
+        while procesos_por_llegar and procesos_por_llegar[0].tiempo_llegada <= ticks:
+            procesos_listos.append(procesos_por_llegar.popleft())
+        
+        if not proceso_actual and procesos_listos:
+            procesos_listos = deque(sorted(procesos_listos, key=lambda p: p.tiempo_servicio))
+            proceso_actual = procesos_listos.popleft()
+        
+        if proceso_actual:
+            secuencia.append(proceso_actual.nombre)
+            proceso_actual.tiempo_restante -= 1
+
+            if proceso_actual.tiempo_restante == 0:
+                tiempo_finalizacion = ticks + 1
+                
+                proceso_actual.tiempo_retorno = tiempo_finalizacion - proceso_actual.tiempo_llegada
+                proceso_actual.tiempo_espera = proceso_actual.tiempo_retorno - proceso_actual.tiempo_servicio
+                
+                procesos_terminados.append(proceso_actual)
+                proceso_actual = None
+        else:
+            secuencia.append('-')
+            
+        ticks += 1
+        
+    prom_T, prom_E, prom_P = calculo_metricas(procesos_terminados)
+
+    return {
+        "algoritmo": "SPN",
+        "T": prom_T,
+        "E": prom_E,
+        "P": prom_P,
+        "Secuencia": secuencia
+    }
+
+
 def calculo_metricas(procesos_terminados):
     total_procesos = len(procesos_terminados)
 
@@ -141,3 +188,4 @@ procesos_prueba = proceso_aleatorio(5)
 
 print(FCFS(copy.deepcopy(procesos_prueba)))
 print(RR(copy.deepcopy(procesos_prueba), 2))
+print(SPN(copy.deepcopy(procesos_prueba)))
