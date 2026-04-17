@@ -26,7 +26,7 @@ Ah comparación de los algoritmos anteriores este es de múltiples colas, donde 
 Este algoritmo favorece a procesos  cortos pues un proceso corto puede terminar su ejecución sin ser degradado. 
 ### 5.- Ronda egoísta (SRR) 
 Finalmente tenemos a la ronda egoísta donde de igual forma este es un algoritmo de múltiples colas, donde van a existir dos colas, una de procesos nuevos y otra de procesos aceptados, donde solo se ejecutan los procesos aceptado. 
-Tanto la prioridad de los procesos nuevos como la de los procesos nuevos van cambiando, donde cuando la prioridad de un proceso nuevo alcance a la de uno aceptado, este va a entrar a la cola de procesos aceptados para su ejecución. 
+Tanto la prioridad de los procesos nuevos como la de los procesos aceptados van cambiando, donde cuando la prioridad de un proceso nuevo alcance a la de uno aceptado, este va a entrar a la cola de procesos aceptados para su ejecución. 
 
 ## Lenguaje y requerimientos de ejecución  
 
